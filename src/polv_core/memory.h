@@ -35,13 +35,13 @@ extern "C"
 {
 #endif
 
-POLVCoreMemory *polvc_memory_allocate(POLVCoreContext *context, VkDeviceSize size,
+POLVCoreMemory *polvc_memory_allocate(POLVCoreContext *context, size_t size,
                                       VkMemoryPropertyFlags required,
                                       VkMemoryPropertyFlags preferred,
                                       int track);
 
 POLVCoreResult polvc_memory_alloc_staging(POLVCoreContext *context, POLVCoreMemory **slot,
-                                          VkDeviceSize size, VkMemoryPropertyFlags preferred,
+                                          size_t size, VkMemoryPropertyFlags preferred,
                                           POLVCoreMemory **result);
 
 void           polvc_memory_destroy(POLVCoreMemory *ptr, int unlink);
@@ -53,9 +53,9 @@ POLVCoreResult polvc_memory_map_read(POLVCoreMemory *src, size_t offset,
 
 POLVCoreResult polvc_memory_submit_buffer_copy(POLVCoreContext *context,
                                                VkBuffer src, VkBuffer dst,
-                                               VkDeviceSize src_offset,
-                                               VkDeviceSize dst_offset,
-                                               VkDeviceSize size);
+                                               size_t src_offset,
+                                               size_t dst_offset,
+                                               size_t size);
 
 #ifdef __cplusplus
 }

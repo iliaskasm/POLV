@@ -218,7 +218,7 @@ POLV_CORE_API uint32_t polvCoreDeviceGetComputeQueueFamily(POLVCoreDevice *dev);
  * @param size the number of bytes to allocate
  * @return device-local memory address
  */
-POLV_CORE_API POLVCoreMemory *polvCoreMemoryAllocDeviceLocal(VkDeviceSize size);
+POLV_CORE_API POLVCoreMemory *polvCoreMemoryAllocDeviceLocal(size_t size);
 
 /**
  * @brief Allocates host-visible memory on the current context
@@ -226,7 +226,7 @@ POLV_CORE_API POLVCoreMemory *polvCoreMemoryAllocDeviceLocal(VkDeviceSize size);
  * @param size the number of bytes to allocate
  * @return host-visible memory address
  */
-POLV_CORE_API POLVCoreMemory *polvCoreMemoryAllocHostVisible(VkDeviceSize size);
+POLV_CORE_API POLVCoreMemory *polvCoreMemoryAllocHostVisible(size_t size);
 
 /**
  * @brief Allocates host-coherent memory on the current context
@@ -234,7 +234,7 @@ POLV_CORE_API POLVCoreMemory *polvCoreMemoryAllocHostVisible(VkDeviceSize size);
  * @param size the number of bytes to allocate
  * @return host-coherent memory address
  */
-POLV_CORE_API POLVCoreMemory *polvCoreMemoryAllocHostCoherent(VkDeviceSize size);
+POLV_CORE_API POLVCoreMemory *polvCoreMemoryAllocHostCoherent(size_t size);
 
 /**
  * @brief Allocates memory on the current context (DEFAULT: host-coherent)
@@ -242,7 +242,7 @@ POLV_CORE_API POLVCoreMemory *polvCoreMemoryAllocHostCoherent(VkDeviceSize size)
  * @param size the number of bytes to allocate
  * @return host-coherent memory address
  */
-POLV_CORE_API POLVCoreMemory *polvCoreMemoryAlloc(VkDeviceSize size);
+POLV_CORE_API POLVCoreMemory *polvCoreMemoryAlloc(size_t size);
 
 /**
  * @brief Frees a POLV memory allocation

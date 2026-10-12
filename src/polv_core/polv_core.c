@@ -401,7 +401,7 @@ uint32_t polvCoreDeviceGetComputeQueueFamily(POLVCoreDevice *dev)
  *                                                            *
  **************************************************************/
 
-POLVCoreMemory *polvCoreMemoryAllocDeviceLocal(VkDeviceSize size)
+POLVCoreMemory *polvCoreMemoryAllocDeviceLocal(size_t size)
 {
 	POLVCoreContext *context;
 
@@ -415,7 +415,7 @@ POLVCoreMemory *polvCoreMemoryAllocDeviceLocal(VkDeviceSize size)
 }
 
 
-POLVCoreMemory *polvCoreMemoryAllocHostVisible(VkDeviceSize size)
+POLVCoreMemory *polvCoreMemoryAllocHostVisible(size_t size)
 {
 	POLVCoreContext *context;
 
@@ -431,7 +431,7 @@ POLVCoreMemory *polvCoreMemoryAllocHostVisible(VkDeviceSize size)
 }
 
 
-POLVCoreMemory *polvCoreMemoryAllocHostCoherent(VkDeviceSize size)
+POLVCoreMemory *polvCoreMemoryAllocHostCoherent(size_t size)
 {
 	POLVCoreContext *context;
 
@@ -447,7 +447,7 @@ POLVCoreMemory *polvCoreMemoryAllocHostCoherent(VkDeviceSize size)
 }
 
 
-POLVCoreMemory *polvCoreMemoryAlloc(VkDeviceSize size)
+POLVCoreMemory *polvCoreMemoryAlloc(size_t size)
 {
 	return polvCoreMemoryAllocHostCoherent(size);
 }

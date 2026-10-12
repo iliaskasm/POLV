@@ -221,11 +221,11 @@ void *polvAlloc(size_t size, POLVMemoryType map_type)
 	switch (map_type)
 	{
 		case polvMemDeviceLocal:
-			return polvCoreMemoryAllocDeviceLocal((VkDeviceSize) size);
+			return polvCoreMemoryAllocDeviceLocal(size);
 		case polvMemHostVisible:
-			return polvCoreMemoryAllocHostVisible((VkDeviceSize) size);
+			return polvCoreMemoryAllocHostVisible(size);
 		case polvMemHostCoherent:
-			return polvCoreMemoryAllocHostCoherent((VkDeviceSize) size);
+			return polvCoreMemoryAllocHostCoherent(size);
 	}
 
 	return NULL;

@@ -38,7 +38,7 @@ typedef struct {
 static int run(TestContext *test, void *opaque)
 {
 	State *state = opaque;
-	const VkDeviceSize bytes = 64 * 1024;
+	const size_t bytes = 64 * 1024;
 	POLVCoreDevice *device;
 	int iter;
 
