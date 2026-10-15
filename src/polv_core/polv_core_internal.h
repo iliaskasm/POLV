@@ -64,7 +64,7 @@ struct POLVCoreMemory_
 	POLVCoreContext        *owner;
 	VkBuffer                buffer;
 	VkDeviceMemory          mem;
-	VkDeviceSize            size;
+	size_t                  size;
 	VkDeviceSize            allocation_size;
 	VkMemoryPropertyFlags   memory_properties;
 	void                   *host_ptr;

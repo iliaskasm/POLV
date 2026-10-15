@@ -37,7 +37,7 @@ static int run(TestContext *test, void *opaque)
 {
 	State *state = opaque;
 	POLVCoreDevice *device;
-	const VkDeviceSize bytes = 4096;
+	const size_t bytes = 4096;
 
 	// Initialize POLV Core
 	TEST_REQUIRE_SUCCESS(test, polvCoreInit());

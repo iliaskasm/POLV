@@ -138,7 +138,7 @@ static void allocation_unlink(POLVCoreMemory *ptr)
 /* Allocates memory given a specific size and memory properties.
  * track == 1 adds the allocation to the context list.
  */
-POLVCoreMemory *polvc_memory_allocate(POLVCoreContext *context, VkDeviceSize size,
+POLVCoreMemory *polvc_memory_allocate(POLVCoreContext *context, size_t size,
                                       VkMemoryPropertyFlags required,
                                       VkMemoryPropertyFlags preferred,
                                       int track)
@@ -167,7 +167,7 @@ POLVCoreMemory *polvc_memory_allocate(POLVCoreContext *context, VkDeviceSize siz
 
 	memset(&buffer_ci, 0, sizeof(buffer_ci));
 	buffer_ci.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-	buffer_ci.size = size;
+	buffer_ci.size = (VkDeviceSize) size;
 	buffer_ci.usage = VK_BUFFER_USAGE_STORAGE_BUFFER_BIT |
 	                  VK_BUFFER_USAGE_TRANSFER_SRC_BIT |
 	                  VK_BUFFER_USAGE_TRANSFER_DST_BIT;
@@ -235,7 +235,7 @@ FAIL:
 
 /* Allocates host-visible staging memory of at least size bytes. */
 POLVCoreResult polvc_memory_alloc_staging(POLVCoreContext *context, POLVCoreMemory **slot,
-                                          VkDeviceSize size, VkMemoryPropertyFlags preferred,
+                                          size_t size, VkMemoryPropertyFlags preferred,
                                           POLVCoreMemory **result)
 {
 	POLVCoreMemory *staging;
@@ -418,9 +418,9 @@ POLVCoreResult polvc_memory_map_read(POLVCoreMemory *src, size_t offset,
 /* Performs a sync buffer-to-buffer copy, in a given context. */
 POLVCoreResult polvc_memory_submit_buffer_copy(POLVCoreContext *context,
                                                VkBuffer src, VkBuffer dst,
-                                               VkDeviceSize src_offset,
-                                               VkDeviceSize dst_offset,
-                                               VkDeviceSize size)
+                                               size_t src_offset,
+                                               size_t dst_offset,
+                                               size_t size)
 {
 	VkCommandBufferBeginInfo bi;
 	VkBufferCopy region;
@@ -444,9 +444,9 @@ POLVCoreResult polvc_memory_submit_buffer_copy(POLVCoreContext *context,
 		return POLV_CORE_ERROR_VULKAN;
 
 	memset(&region, 0, sizeof(region));
-	region.srcOffset = src_offset;
-	region.dstOffset = dst_offset;
-	region.size = size;
+	region.srcOffset = (VkDeviceSize) src_offset;
+	region.dstOffset = (VkDeviceSize) dst_offset;
+	region.size = (VkDeviceSize) size;
 
 	vkCmdCopyBuffer(context->command_buffer, src, dst, 1, &region);
 
@@ -456,15 +456,8 @@ POLVCoreResult polvc_memory_submit_buffer_copy(POLVCoreContext *context,
 	barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
 	barrier.dstAccessMask = VK_ACCESS_HOST_READ_BIT;
 
-	vkCmdPipelineBarrier(
-		context->command_buffer,
-		VK_PIPELINE_STAGE_TRANSFER_BIT,
-		VK_PIPELINE_STAGE_HOST_BIT,
-		0,
-		1, &barrier,
-		0, NULL,
-		0, NULL
-	);
+	vkCmdPipelineBarrier(context->command_buffer, VK_PIPELINE_STAGE_TRANSFER_BIT,
+	                     VK_PIPELINE_STAGE_HOST_BIT, 0, 1, &barrier, 0, NULL, 0, NULL);
 
 	if ((vr = vkEndCommandBuffer(context->command_buffer)) != VK_SUCCESS)
 		return POLV_CORE_ERROR_VULKAN;

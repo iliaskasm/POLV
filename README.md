@@ -382,6 +382,13 @@ layout(local_size_x_id = 0,
 
 These correspond to the `x`, `y`, and `z` workgroup dimensions passed to the POLV kernel launch API.
 
+## Caching
+POLV caches launched kernels under `~/.cache/polv`, for faster loading times. To disable caching, set `POLV_CACHE` environment variable to 0:
+
+```sh
+export POLV_CACHE=0
+```
+
 ## Current limitations
 * POLV currently supports buffer-based kernel arguments only; each kernel argument is a Vulkan storage buffer.
 * User-defined push constants and additional specialization constants are not currently exposed through the POLV API. Specialization constant IDs 0, 1, and 2 are reserved for workgroup dimensions.

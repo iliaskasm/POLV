@@ -218,7 +218,7 @@ POLV_CORE_API uint32_t polvCoreDeviceGetComputeQueueFamily(POLVCoreDevice *dev);
  * @param size the number of bytes to allocate
  * @return device-local memory address
  */
-POLV_CORE_API POLVCoreMemory *polvCoreMemoryAllocDeviceLocal(VkDeviceSize size);
+POLV_CORE_API POLVCoreMemory *polvCoreMemoryAllocDeviceLocal(size_t size);
 
 /**
  * @brief Allocates host-visible memory on the current context
@@ -226,7 +226,7 @@ POLV_CORE_API POLVCoreMemory *polvCoreMemoryAllocDeviceLocal(VkDeviceSize size);
  * @param size the number of bytes to allocate
  * @return host-visible memory address
  */
-POLV_CORE_API POLVCoreMemory *polvCoreMemoryAllocHostVisible(VkDeviceSize size);
+POLV_CORE_API POLVCoreMemory *polvCoreMemoryAllocHostVisible(size_t size);
 
 /**
  * @brief Allocates host-coherent memory on the current context
@@ -234,7 +234,7 @@ POLV_CORE_API POLVCoreMemory *polvCoreMemoryAllocHostVisible(VkDeviceSize size);
  * @param size the number of bytes to allocate
  * @return host-coherent memory address
  */
-POLV_CORE_API POLVCoreMemory *polvCoreMemoryAllocHostCoherent(VkDeviceSize size);
+POLV_CORE_API POLVCoreMemory *polvCoreMemoryAllocHostCoherent(size_t size);
 
 /**
  * @brief Allocates memory on the current context (DEFAULT: host-coherent)
@@ -242,7 +242,7 @@ POLV_CORE_API POLVCoreMemory *polvCoreMemoryAllocHostCoherent(VkDeviceSize size)
  * @param size the number of bytes to allocate
  * @return host-coherent memory address
  */
-POLV_CORE_API POLVCoreMemory *polvCoreMemoryAlloc(VkDeviceSize size);
+POLV_CORE_API POLVCoreMemory *polvCoreMemoryAlloc(size_t size);
 
 /**
  * @brief Frees a POLV memory allocation
@@ -323,7 +323,7 @@ POLV_CORE_API POLVCoreResult polvCoreMemoryCopyH2H(const void *src, size_t src_o
  **************************************************************/
 
 /**
- * @brief Creates a kernel from a SPIR-V binary, on the current context
+ * @brief Creates a kernel from a SPIR-V binary file, on the current context
  * 
  * @param kernel          (ret) the created kernel
  * @param shader_filename the shader filename
@@ -332,6 +332,18 @@ POLV_CORE_API POLVCoreResult polvCoreMemoryCopyH2H(const void *src, size_t src_o
  */
 POLV_CORE_API POLVCoreResult polvCoreKernelCreate(POLVCoreKernel **kernel, const char *shader_filename, 
                                                   int nargs);
+
+/**
+ * @brief Creates a kernel from a raw SPIR-V binary, on the current context
+ * 
+ * @param kernel          (ret) the created kernel
+ * @param spirv_binary    the SPIR-V binary
+ * @param spirv_size      the size of the SPIR-V binary
+ * @param nargs           the number of kernel arguments
+ * @return                POLV_CORE_SUCCESS on success, or POLV_CORE_ERROR_* otherwise
+ */
+POLV_CORE_API POLVCoreResult polvCoreKernelCreateFromBinary(POLVCoreKernel **kernel, const uint32_t *spirv_binary, 
+                                                            size_t spirv_size, int nargs);
 
 /**
  * @brief Creates a kernel from a GLSL file, on the current context
